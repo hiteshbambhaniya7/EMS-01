@@ -1,0 +1,79 @@
+/project-root
+│
+├── /frontend (client,admin)
+│   ├── /public
+│   │   ├── index.html
+│   │   ├── favicon.ico
+│   │   └── manifest.json
+│   │
+│   ├── /src
+│   │   ├── /assets
+│   │   │   ├── /images
+│   │   │   ├── /styles
+│   │   │   │   └── App.css
+│   │   │   └── /fonts
+│   │   │
+│   │   ├── /components
+│   │   │   ├── Navbar.js
+│   │   │   ├── Footer.js
+│   │   │   └── /common
+│   │   │       └── Button.js
+│   │   │
+│   │   ├── /pages
+│   │   │   ├── Home.js
+│   │   │   ├── About.js
+│   │   │   ├── Contact.js
+│   │   │   └── /auth
+│   │   │       ├── Login.js
+│   │   │       └── Register.js
+│   │   │
+│   │   ├── /services
+│   │   │   └── api.js
+│   │   │
+│   │   ├── /store
+│   │   │   ├── store.js
+│   │   │   ├── rootReducer.js
+│   │   │   └── /slices
+│   │   │       ├── userSlice.js
+│   │   │       └── productSlice.js
+│   │   │
+│   │   ├── App.js
+│   │   ├── index.js
+│   │   └── reportWebVitals.js
+│   │
+│   └── package.json
+│
+├── /backend (server)
+│   ├── /config
+│   │   ├── db.js
+│   │   └── default.json
+│   │
+│   ├── /controllers
+│   │   ├── authController.js
+│   │   ├── userController.js
+│   │   └── productController.js
+│   │
+│   ├── /middleware
+│   │   └── authMiddleware.js
+│   │
+│   ├── /models
+│   │   ├── User.js
+│   │   └── Product.js
+│   │
+│   ├── /routes
+│   │   ├── authRoutes.js
+│   │   ├── userRoutes.js
+│   │   └── productRoutes.js
+│   │
+│   ├── /utils
+│   │   └── helpers.js
+│   │
+│   ├── server.js
+│   └── package.json
+│
+├── /scripts
+│   └── seedDB.js
+│
+├── .gitignore
+├── README.md
+└── package.json
