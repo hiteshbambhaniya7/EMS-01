@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, {Schema} from 'mongoose';
 
-const projectSchema = new mongoose.Schema({
+const projectSchema = new Schema({
     title:{
         type: String,
         required: true
@@ -9,20 +9,20 @@ const projectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    client_name:{
+    clientName:{
         type: String,
         required: true
     },
     manager:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    start_date:{
+    startDate:{
         type: Date,
         required: true
     },
-    end_date:{
+    endDate:{
         type: Date,
         required: true
     },
@@ -31,7 +31,7 @@ const projectSchema = new mongoose.Schema({
         enum :['SUBMIT','DELIVERED','INPROGRESS'],
         default: 'INPROGRESS'
     },
-    project_cost:{
+    projectCost:{
         type: Number,
         required: true
     },
@@ -39,7 +39,11 @@ const projectSchema = new mongoose.Schema({
         type:String,
         enum :['PAID','UNPAID'],
         default: 'UNPAID'
-    }
+    },
+    team:[{
+        type : Schema.Types.ObjectId,
+        ref : 'User'
+    }]
 
 },{timestamps: true});
 
