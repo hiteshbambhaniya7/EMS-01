@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose,{Schema} from 'mongoose';
 
-const departmentSchema = new mongoose.Schema({
+const departmentSchema = new Schema({
 
 },{timestamps: true});
 

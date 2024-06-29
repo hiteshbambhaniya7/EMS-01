@@ -1,15 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose,{Schema} from 'mongoose';
 
-const leaveSchema = new mongoose.Schema({
-    leave_type: {
+const leaveSchema = new Schema({
+    leaveType: {
         type: String,
         required: true
     },
-    from_date: {
+    fromDate: {
         type: Date,
         required: true
     },
-    to_date: {
+    toDate: {
         type: Date,
         required: true
     },
@@ -23,9 +23,8 @@ const leaveSchema = new mongoose.Schema({
         default: 'PENDING'
     },
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
-        required: true
     }
 
 },{timestamps: true});
