@@ -6,7 +6,6 @@ const userSchema = new Schema(
   {
     fullName: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
@@ -19,12 +18,10 @@ const userSchema = new Schema(
     },
     phone: {
       type: String,
-      required: true,
       unique: true,
     },
     photo: {
       type: String,
-      required: true,
     },
     address: {
       type: Schema.Types.ObjectId,
@@ -54,13 +51,14 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum: [
+        "NA",
         "TRAINEE",
         "DEVELOPER",
         "MANAGER",
         "TEAM LEADER",
         "DEPARTMENT HEAD",
       ],
-      default: "ADMIN",
+      default: "NA",
     },
     workingHours: {
       type: Number,
