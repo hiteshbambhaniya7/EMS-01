@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose,{Schema} from 'mongoose';
 
-const addressSchema = new mongoose.Schema({
+const addressSchema = new Schema({
     userId:{
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
         unique: true

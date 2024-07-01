@@ -1,59 +1,112 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from "mongoose";
+import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken';
 
-const userSchema = new mongoose.Schema({
-    fullname:{
-        type: String,
-        required: true
+const userSchema = new Schema(
+  {
+    fullName: {
+      type: String,
+      required: true,
     },
-    email:{
-        type: String,
-        required: true,
-        unique: true
+    email: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    password:{
-        type: String,
-        required: true
+    password: {
+      type: String,
+      required: true,
     },
-    phone:{
-        type: String,
-        required: true,
-        unique: true
+    phone: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    address : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref: 'Address'
+    photo: {
+      type: String,
+      required: true,
     },
-    access:{
-        type: String,
-        enum :['GUEST','EMPLOYEE','ADMIN','SUPERADMIN'],
-        default: 'GUEST'
+    address: {
+      type: Schema.Types.ObjectId,
+      ref: "Address",
     },
-    gender:{
-        type: String,
-        enum :['MALE','FEMALE'],
-        default: 'MALE'
+    access: {
+      type: String,
+      enum: ["GUEST", "EMPLOYEE", "ADMIN", "SUPERADMIN"],
+      default: "GUEST",
     },
-    marital_status:{
-        type: String,
-        enum :['SINGLE','MARRIED'],
-        default: 'SINGLE'
+    gender: {
+      type: String,
+      enum: ["MALE", "FEMALE"],
+      default: "MALE",
     },
-    joining_date:{
-        type: Date
+    maritalStatus: {
+      type: String,
+      enum: ["SINGLE", "MARRIED"],
+      default: "SINGLE",
     },
-    skill:{
-        type: String
+    joiningDate: {
+      type: Date,
     },
-    role:{
-        type: String,
-        enum :['TRAINEE','DEVELOPER','MANAGER','TEAM LEADER','DEPARTMENT HEAD'],
-        default: 'ADMIN'
+    skill: {
+      type: String,
     },
-    working_hours : {
-        type: Number,
-        default: 8
-    }
+    role: {
+      type: String,
+      enum: [
+        "TRAINEE",
+        "DEVELOPER",
+        "MANAGER",
+        "TEAM LEADER",
+        "DEPARTMENT HEAD",
+      ],
+      default: "ADMIN",
+    },
+    workingHours: {
+      type: Number,
+      default: 8,
+    },
+  },
+  { timestamps: true }
+);
 
-},{timestamps: true});
+userSchema.pre =
+  ("save",
+  async function (next) {
+    if (!this.isModified("password")) return next();
 
-export const User = mongoose.model('User' , userSchema);
+    this.password = bcrypt.hash(this.password, 10);
+    next();
+  });
+
+userSchema.methods.isPasswordCorrect = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.generateAccessToken = function(){
+    return jwt.sign(
+        {
+            _id:this._id,
+            email:this.email,
+            username:this.username,
+            fullName:this.fullName
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRY
+        }
+    )
+}
+userSchema.methods.generateRefreshToken = function(){
+    return jwt.sign(
+        {
+            _id:this._id
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        {
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+        }
+    )
+}
+
+export const User = mongoose.model("User", userSchema);
