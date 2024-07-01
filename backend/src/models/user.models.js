@@ -35,12 +35,10 @@ const userSchema = new Schema(
     gender: {
       type: String,
       enum: ["MALE", "FEMALE"],
-      default: "MALE",
     },
     maritalStatus: {
       type: String,
       enum: ["SINGLE", "MARRIED"],
-      default: "SINGLE",
     },
     joiningDate: {
       type: Date,
@@ -51,29 +49,29 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum: [
-        "NA",
         "TRAINEE",
         "DEVELOPER",
         "MANAGER",
         "TEAM LEADER",
         "DEPARTMENT HEAD",
       ],
-      default: "NA",
     },
     workingHours: {
       type: Number,
       default: 8,
     },
+    refreshToken : {
+      type: String
+    }
   },
   { timestamps: true }
 );
 
-userSchema.pre =
-  ("save",
+userSchema.pre("save",
   async function (next) {
     if (!this.isModified("password")) return next();
 
-    this.password = bcrypt.hash(this.password, 10);
+    this.password = await bcrypt.hash(this.password, 10);
     next();
   });
 
